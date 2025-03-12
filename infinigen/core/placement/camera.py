@@ -699,7 +699,8 @@ def configure_cameras(
     else:
         center_coordinate = None
 
-    for cam_rig in cam_rigs:
+    print("Cam rigs: ", len(cam_rigs))
+    for i, cam_rig in enumerate(cam_rigs):
         views = compute_base_views(
             cam_rig,
             n_views=1,

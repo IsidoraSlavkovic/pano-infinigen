@@ -737,7 +737,7 @@ def print_stats_block(
 
 
 @gin.configurable
-def main(args, shuffle=True, wandb_project="render", upload_commandfile_method=None):
+def main(args, shuffle=True, wandb_project="pano-infinigen", upload_commandfile_method=None):
     command_path = args.output_folder / "datagen_command.sh"
     with command_path.open("w") as f:
         f.write(" ".join(sys.argv))
