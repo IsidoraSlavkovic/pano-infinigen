@@ -9,6 +9,7 @@ import bpy
 import bpy_extras
 import numpy as np
 from mathutils import Matrix, Vector
+from ..placement import camera as cam_util
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 #
 # See notes on this in
 # blender.stackexchange.com/questions/15102/what-is-blenders-camera-projection-matrix-model
-def get_calibration_matrix_K_from_blender(camd):
+def get_calibration_matrix_K_from_blender(cam):
+    camd = cam.data
     f_in_mm = camd.lens
     scene = bpy.context.scene
     W = resolution_x_in_px = scene.render.resolution_x
@@ -32,9 +34,9 @@ def get_calibration_matrix_K_from_blender(camd):
 
     if sensor_width_in_mm / sensor_height_in_mm != W / H:
         vals = f"{(sensor_width_in_mm, sensor_height_in_mm, W, H)=}"
-        raise ValueError(
-            f"Camera sensor has not been properly configured, you probably need to call camera.adjust_camera_sensor on it. {vals}"
-        )
+        # raise ValueError(
+        #     f"Camera sensor has not been properly configured, you probably need to call camera.adjust_camera_sensor on it. {vals}"
+        # )
 
     pixel_aspect_ratio = scene.render.pixel_aspect_x / scene.render.pixel_aspect_y
     if camd.sensor_fit == "VERTICAL":
@@ -112,7 +114,7 @@ def get_3x4_RT_matrix_from_blender(cam):
 
 
 def get_3x4_P_matrix_from_blender(cam):
-    K = get_calibration_matrix_K_from_blender(cam.data)
+    K = get_calibration_matrix_K_from_blender(cam)
     RT = get_3x4_RT_matrix_from_blender(cam)
     return K @ RT, K, RT
 

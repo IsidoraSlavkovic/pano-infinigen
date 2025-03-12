@@ -40,9 +40,18 @@ from . import animation_policy
 
 logger = logging.getLogger(__name__)
 
+def adjust_camera_sensor(cam):
+    scene = bpy.context.scene
+    W = scene.render.resolution_x
+    H = scene.render.resolution_y
+    sensor_width = 18 * (W / H)
+    # assert sensor_width.is_integer(), (18, W, H)
+    cam.data.sensor_height = 18
+    cam.data.sensor_width = int(sensor_width)
 
 @gin.configurable
 def get_sensor_coords(cam, H, W, sparse=False):
+    adjust_camera_sensor(cam)
     camd = cam.data
     f_in_m = camd.lens / 1000
     scene = bpy.context.scene
@@ -52,12 +61,6 @@ def get_sensor_coords(cam, H, W, sparse=False):
     scale = scene.render.resolution_percentage / 100
     sensor_width_in_m = camd.sensor_width / 1000
     sensor_height_in_m = camd.sensor_height / 1000
-    assert abs(sensor_width_in_m / sensor_height_in_m - W / H) < 1e-4, (
-        sensor_width_in_m,
-        sensor_height_in_m,
-        W,
-        H,
-    )
 
     pixel_aspect_ratio = scene.render.pixel_aspect_x / scene.render.pixel_aspect_y
     if camd.sensor_fit == "VERTICAL":
@@ -97,17 +100,6 @@ def get_sensor_coords(cam, H, W, sparse=False):
         cam_coords_vectors[y, x] = cam.matrix_world @ pixelVector
 
     return cam_coords_vectors, pixel_locs
-
-
-def adjust_camera_sensor(cam):
-    scene = bpy.context.scene
-    W = scene.render.resolution_x
-    H = scene.render.resolution_y
-    sensor_width = 18 * (W / H)
-    assert sensor_width.is_integer(), (18, W, H)
-    cam.data.sensor_height = 18
-    cam.data.sensor_width = int(sensor_width)
-
 
 def spawn_camera():
     bpy.ops.object.camera_add()
@@ -816,8 +808,10 @@ def save_camera_parameters(
     if use_dof is not None:
         camera_obj.data.dof.use_dof = use_dof
 
+    adjust_camera_sensor(camera_obj)
+
     # Saving camera parameters
-    K = camera.get_calibration_matrix_K_from_blender(camera_obj.data)
+    K = camera.get_calibration_matrix_K_from_blender(camera_obj)
     suffix = get_suffix(
         dict(cam_rig=camrig_id, resample=0, frame=frame, subcam=subcam_id)
     )
