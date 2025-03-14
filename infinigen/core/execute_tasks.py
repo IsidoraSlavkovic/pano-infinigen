@@ -9,7 +9,6 @@ import time
 import typing
 from collections import defaultdict
 from pathlib import Path
-import torch
 
 # ruff: noqa: E402
 os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "1"  # This must be done BEFORE import cv2.
@@ -355,7 +354,6 @@ def main(input_folder, output_folder, scene_seed, task, task_uniqname, **kwargs)
         f"not supported. Please use {version_req}"
     )
     logger.info(f"infinigen version {infinigen.__version__}")
-    logger.info(f"CUDA_VISIBLE_DEVICES={torch.cuda.device_count()}")
 
     if input_folder is not None:
         input_folder = Path(input_folder).absolute()

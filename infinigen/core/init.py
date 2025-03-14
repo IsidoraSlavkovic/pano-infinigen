@@ -252,7 +252,7 @@ def configure_cycles_devices(use_gpu=True):
 
     types = sorted(types, key=CYCLES_GPUTYPES_PREFERENCE.index)
     logger.info(f"Available devices have {types=}")
-    use_device_type = types[1]
+    use_device_type = "CUDA"
 
     if use_device_type == "CPU":
         logger.warning(f"Job will use CPU-only, only found {types=}")
