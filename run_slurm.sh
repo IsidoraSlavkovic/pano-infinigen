@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=pano-infinigen-array100
-#SBATCH --array=1-100
+#SBATCH --array=1-1000
 #SBATCH -n 12
 #SBATCH --time=4:00:00
-#SBATCH --mem-per-cpu=20000
+#SBATCH --mem-per-cpu=2000
 #SBATCH --gpus=1
 #SBATCH --tmp=208000
 
@@ -23,3 +23,13 @@ python -m infinigen.datagen.manage_jobs --output_folder outputs/indoor/$folder_n
     --pipeline_overrides get_cmd.driver_script='infinigen_examples.generate_indoors' manage_datagen_jobs.num_concurrent=$num_concurrent \
     --overrides compose_indoors.restrict_single_supported_roomtype=True \
     --wandb_mode online
+
+# Delete unecessary files after generating depth and normals.
+find outputs/indoor/$folder_name/  -type f -name "*.exr" -delete
+find outputs/indoor/$folder_name/  -type d -name "coarse" -exec rm -rf {} +
+find outputs/indoor/$folder_name/  -type d -name "fine" -exec rm -rf {} +
+find outputs/indoor/$folder_name/  -type d -name "Objects" -exec rm -rf {} +
+find outputs/indoor/$folder_name/  -type d -name "camview" -exec rm -rf {} +
+find outputs/indoor/$folder_name/  -type d -name "UniqueInstances" -exec rm -rf {} +
+find outputs/indoor/$folder_name/  -type d -name "logs" -exec rm -rf {} +
+find outputs/indoor/$folder_name/  -type d -name "tmp" -exec rm -rf {} +

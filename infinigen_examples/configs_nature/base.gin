@@ -42,13 +42,10 @@ compositor_postprocessing.color_correct = False
 flat/render_image.override_num_samples = 16
 flat/render_image.flat_shading = True
 full/render_image.passes_to_save = [
-    ['material_index', 'IndexMA'],
 ]
 flat/render_image.passes_to_save = [
     ['z', 'Depth'],
     ['normal', 'Normal'],
-    ['vector', 'Vector'],
-    ['object_index', 'IndexOB']
 ]
 
 execute_tasks.generate_resolution = (3840, 2160)

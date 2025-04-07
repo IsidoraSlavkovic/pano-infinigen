@@ -291,23 +291,24 @@ def global_flat_shading():
 
 
 def postprocess_blendergt_outputs(frames_folder, output_stem):
-    # Save flow visualization
+    # # Save flow visualization
     flow_dst_path = frames_folder / f"Vector{output_stem}.exr"
-    flow_array = load_flow(flow_dst_path)
-    np.save(flow_dst_path.with_name(f"Flow{output_stem}.npy"), flow_array)
+    # flow_array = load_flow(flow_dst_path)
+    # np.save(flow_dst_path.with_name(f"Flow{output_stem}.npy"), flow_array)
 
-    flow_color = colorize_flow(flow_array)
-    if flow_color is not None:
-        imwrite(
-            flow_dst_path.with_name(f"Flow{output_stem}.png"),
-            flow_color,
-        )
-        flow_dst_path.unlink()
+    # flow_color = colorize_flow(flow_array)
+    # if flow_color is not None:
+    #     imwrite(
+    #         flow_dst_path.with_name(f"Flow{output_stem}.png"),
+    #         flow_color,
+    #     )
+    #     flow_dst_path.unlink()
 
     # Save surface normal visualization
     normal_dst_path = frames_folder / f"Normal{output_stem}.exr"
     normal_array = load_normals(normal_dst_path)
-    np.save(flow_dst_path.with_name(f"SurfaceNormal{output_stem}.npy"), normal_array)
+    normal_array_reduced = normal_array.astype(np.float16)
+    np.save(flow_dst_path.with_name(f"SurfaceNormal{output_stem}.npy"), normal_array_reduced)
     imwrite(
         flow_dst_path.with_name(f"SurfaceNormal{output_stem}.png"),
         colorize_normals(normal_array),
@@ -317,36 +318,37 @@ def postprocess_blendergt_outputs(frames_folder, output_stem):
     # Save depth visualization
     depth_dst_path = frames_folder / f"Depth{output_stem}.exr"
     depth_array = load_depth(depth_dst_path)
-    np.save(flow_dst_path.with_name(f"Depth{output_stem}.npy"), depth_array)
+    depth_array_reduced = depth_array.astype(np.float16)
+    np.save(flow_dst_path.with_name(f"Depth{output_stem}.npy"), depth_array_reduced)
     imwrite(
         depth_dst_path.with_name(f"Depth{output_stem}.png"), colorize_depth(depth_array)
     )
     depth_dst_path.unlink()
 
     # Save segmentation visualization
-    seg_dst_path = frames_folder / f"IndexOB{output_stem}.exr"
-    seg_mask_array = load_seg_mask(seg_dst_path)
-    np.save(
-        flow_dst_path.with_name(f"ObjectSegmentation{output_stem}.npy"), seg_mask_array
-    )
-    imwrite(
-        seg_dst_path.with_name(f"ObjectSegmentation{output_stem}.png"),
-        colorize_int_array(seg_mask_array),
-    )
-    seg_dst_path.unlink()
+    # seg_dst_path = frames_folder / f"IndexOB{output_stem}.exr"
+    # seg_mask_array = load_seg_mask(seg_dst_path)
+    # np.save(
+    #     flow_dst_path.with_name(f"ObjectSegmentation{output_stem}.npy"), seg_mask_array
+    # )
+    # imwrite(
+    #     seg_dst_path.with_name(f"ObjectSegmentation{output_stem}.png"),
+    #     colorize_int_array(seg_mask_array),
+    # )
+    # seg_dst_path.unlink()
 
     # Save unique instances visualization
-    uniq_inst_path = frames_folder / f"UniqueInstances{output_stem}.exr"
-    uniq_inst_array = load_uniq_inst(uniq_inst_path)
-    np.save(
-        flow_dst_path.with_name(f"InstanceSegmentation{output_stem}.npy"),
-        uniq_inst_array,
-    )
-    imwrite(
-        uniq_inst_path.with_name(f"InstanceSegmentation{output_stem}.png"),
-        colorize_int_array(uniq_inst_array),
-    )
-    uniq_inst_path.unlink()
+    # uniq_inst_path = frames_folder / f"UniqueInstances{output_stem}.exr"
+    # uniq_inst_array = load_uniq_inst(uniq_inst_path)
+    # np.save(
+    #     flow_dst_path.with_name(f"InstanceSegmentation{output_stem}.npy"),
+    #     uniq_inst_array,
+    # )
+    # imwrite(
+    #     uniq_inst_path.with_name(f"InstanceSegmentation{output_stem}.png"),
+    #     colorize_int_array(uniq_inst_array),
+    # )
+    # uniq_inst_path.unlink()
 
 
 def postprocess_materialgt_output(frames_folder, output_stem):

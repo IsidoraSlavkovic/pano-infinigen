@@ -381,8 +381,16 @@ def keep_cam_pose_proposal(
                             f"keep_cam_pose_proposal rejects {ratio=} for {q=}"
                         )
                         return None
-
-    return np.std(dists) + 1.5 * np.min(dists)
+    
+    try: 
+        res = np.std(dists) + 1.5 * np.min(dists)
+    except ValueError:
+        logger.debug(
+            f"Dists empty."
+        )
+        res = 0
+    
+    return res 
 
 
 @gin.configurable
