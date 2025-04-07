@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-#SBATCH --job-name=pano-infinigen-array100
-#SBATCH --array=1-1000
+#SBATCH --job-name=pano-infinigen-array1
+#SBATCH --array=1-1
 #SBATCH -n 12
 #SBATCH --time=4:00:00
 #SBATCH --mem-per-cpu=2000
@@ -12,7 +12,7 @@ echo "$(date) start ${SLURM_JOB_ID}"
 
 module load eth_proxy
 
-name=pano-infinigen-array100
+name=pano-infinigen-array1
 # id=${SLURM_JOB_ID} #03790512 #02691156 #03790512 #02958343
 num_scenes=1
 num_concurrent=32
