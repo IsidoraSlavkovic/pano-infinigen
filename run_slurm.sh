@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #SBATCH --job-name=pano-infinigen-array1
-#SBATCH --array=1-1
+#SBATCH --array=1-1000
 #SBATCH -n 12
 #SBATCH --time=4:00:00
 #SBATCH --mem-per-cpu=2000
