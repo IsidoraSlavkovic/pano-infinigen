@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#SBATCH --job-name=zip_data
+#SBATCH --job-name=zip_data_img_only
 #SBATCH -n 12
 #SBATCH --time=120:00:00
 #SBATCH --mem-per-cpu=2000
@@ -9,4 +9,4 @@
 
 module load eth_proxy
 
-zip -r -0 /cluster/work/igp_psr/infinigen_3000s_6i.zip /cluster/work/igp_psr/islavkovic/pano-infinigen/outputs/indoor
+python create_img_only_zip.py 
