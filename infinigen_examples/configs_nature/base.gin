@@ -3,6 +3,8 @@ include 'infinigen_examples/configs_nature/surface_registry.gin'
 OVERALL_SEED = 0
 LOG_DIR = '.'
 
+fine_terrain.mesher_backend = "OcMesher"
+
 Terrain.asset_folder = "" # Will read from $INFINIGEN_ASSET_FOLDER environment var when set to None, and on the fly when set to ""
 Terrain.asset_version = 'May27'
 
