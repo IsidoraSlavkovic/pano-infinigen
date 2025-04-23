@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Generate outdoor 
-python -m infinigen.datagen.manage_jobs --output_folder outputs/my_outdoor_dataset2 --num_scenes 1 \
+python -m infinigen.datagen.manage_jobs --output_folder outputs/my_outdoor_dataset5 --num_scenes 10 \
 --configs simple.gin --pipeline_configs local_256GB.gin monocular.gin blender_gt.gin --pipeline_overrides LocalScheduleHandler.use_gpu=True
 
 # python -m infinigen.datagen.manage_jobs --output_folder outputs/my_outdoor_dataset --num_scenes 1 \

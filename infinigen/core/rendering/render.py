@@ -319,9 +319,11 @@ def postprocess_blendergt_outputs(frames_folder, output_stem):
     depth_dst_path = frames_folder / f"Depth{output_stem}.exr"
     depth_array = load_depth(depth_dst_path)
     depth_array_reduced = depth_array.astype(np.float16)
-    np.save(flow_dst_path.with_name(f"Depth{output_stem}.npy"), depth_array_reduced)
+    np.save(flow_dst_path.with_name(f"Depth{output_stem}_raw.npy"), depth_array_reduced)
+    depth_array_log = np.log(depth_array_reduced + 1e-6)
+    np.save(flow_dst_path.with_name(f"Depth{output_stem}.npy"), depth_array_log)
     imwrite(
-        depth_dst_path.with_name(f"Depth{output_stem}.png"), colorize_depth(depth_array)
+        depth_dst_path.with_name(f"Depth{output_stem}.png"), colorize_depth(depth_array_log)
     )
     depth_dst_path.unlink()
 
