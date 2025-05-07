@@ -2,13 +2,14 @@ import zipfile
 
 # Paths to input zip files
 input_zips = [
-    "/cluster/work/igp_psr/pano_infinigen_part1.zip",
-    "/cluster/work/igp_psr/pano_infinigen_part2.zip",
-    "/cluster/work/igp_psr/pano_infinigen_part3.zip"
+    "/cluster/work/igp_psr/infinigen_outdoor_3000s.zip",
+    "/cluster/work/igp_psr/infinigen_outdoor_3000s_part2.zip",
+    "/cluster/work/igp_psr/infinigen_outdoor_3000s_part3.zip",
+    "/cluster/work/igp_psr/infinigen_outdoor_3000s_part4.zip",
 ]
 
 # Output zip file
-output_zip = "/cluster/work/igp_psr/pano_infinigen.zip"
+output_zip = "/cluster/work/igp_psr/pano_infinigen_outdoor.zip"
 
 # Combine zips without compression
 with zipfile.ZipFile(output_zip, 'w', compression=zipfile.ZIP_STORED) as out_zip:

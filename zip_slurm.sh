@@ -9,4 +9,4 @@
 
 module load eth_proxy
 
-zip -r -0 /cluster/work/igp_psr/infinigen_3000s_6i.zip /cluster/work/igp_psr/islavkovic/pano-infinigen/outputs/indoor
+zip -r -0 /cluster/work/igp_psr/infinigen_outdoor_1000s_part4.zip /cluster/work/igp_psr/islavkovic/pano-infinigen/outputs/outdoor
